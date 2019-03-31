@@ -180,15 +180,7 @@ void InputImpl::setMousePosition(const Vector2i& position)
     // Here we don't need to reverse the coordinates.
     int scale = [[NSScreen mainScreen] backingScaleFactor];
     CGPoint pos = CGPointMake(position.x / scale, position.y / scale);
-
-    // Place the cursor.
-    CGEventRef event = CGEventCreateMouseEvent(NULL,
-                                               kCGEventMouseMoved,
-                                               pos,
-                                               /* we don't care about this: */ kCGMouseButtonLeft);
-    CGEventPost(kCGHIDEventTap, event);
-    CFRelease(event);
-    // This is a workaround to deprecated CGSetLocalEventsSuppressionInterval.
+    CGWarpMouseCursorPosition(pos);
 }
 
 
